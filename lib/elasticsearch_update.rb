@@ -51,7 +51,7 @@ module ElasticsearchUpdate
     end
 
     def version
-      ask('What version of Elasticsearch should we update to? ', String)
+      ask('What version of Elasticsearch should we update to? (major.minor.path) ', String) { |q| q.validate = /\d\.\d\.\d/ }
     end
 
     def verify_file(local_file, ext, vers)
