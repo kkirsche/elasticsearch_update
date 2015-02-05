@@ -31,7 +31,7 @@ Begin the binary `update.rb` file and it will walk you through the upgrade proce
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/elasticsearch_update/fork )
+1. Fork it ( https://github.com/kkirsche/elasticsearch_update/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
