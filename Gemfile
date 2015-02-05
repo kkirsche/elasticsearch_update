@@ -4,3 +4,4 @@ source 'https://rubygems.org'
 gemspec
 gem 'highline'
 gem 'rake'
+gem 'minitest'
