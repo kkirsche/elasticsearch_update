@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = ElasticsearchUpdate::VERSION
   spec.authors       = ["Kevin Kirsche"]
   spec.email         = ["kev.kirsche@gmail.com"]
-  spec.summary       = %q{Updates the elasticsearch service from a deb on the local machine.}
-  spec.description   = %q{Updates the elasticsearch service from a deb on the local machine.}
+  spec.summary       = %q{Updates the elasticsearch instance on the local machine.}
+  spec.description   = %q{Updates the elasticsearch instance from a deb, zip, tar, or rpm on the local machine.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
