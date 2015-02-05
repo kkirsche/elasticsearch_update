@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/kkirsche/elasticsearch_update.svg?branch=master)](https://travis-ci.org/kkirsche/elasticsearch_update)
 
-# Elasticsearch Update
+# Elasticsearch Update v0.0.1
 
 This gem allows users to easily update their 1.0 and later Elasticsearch instance on the local machine from one of the following formats.
 
@@ -30,6 +30,10 @@ Or install it yourself as:
 ## Usage
 
 Begin the binary `update.rb` file and it will walk you through the upgrade process.
+
+## Versioning
+
+For transparency into my release cycle and in striving to maintain backward compatibility, Elasticsearch Update is maintained under [the Semantic Versioning guidelines](http://semver.org/). Sometimes I screw up, but I'll adhere to those rules whenever possible.
 
 ## Contributing
 
