@@ -5,3 +5,4 @@ gemspec
 gem 'highline'
 gem 'rake'
 gem 'minitest'
+gem 'bundler'
