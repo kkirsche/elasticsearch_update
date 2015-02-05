@@ -1,6 +1,13 @@
-# ElasticsearchUpdate
+# Elasticsearch Update
 
-TODO: Write a gem description
+This gem allows users to easily update their 1.0 and later Elasticsearch instance on the local machine from one of the following formats.
+
+1. .zip
+2. .tar.gz
+3. .deb
+4. .rpm
+
+Installation follows the upgrade recommendations of Elasticsearch found [here](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/setup-upgrade.html).
 
 ## Installation
 
@@ -20,7 +27,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Begin the binary `update.rb` file and it will walk you through the upgrade process.
 
 ## Contributing
 
