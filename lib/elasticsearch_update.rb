@@ -15,8 +15,7 @@ module ElasticsearchUpdate
       @log.debug('Logger created for Downloader.')
     end
 
-    def download_elasticsearch(local_file)
-      es_extension = extension
+    def download_elasticsearch(local_file, es_extension)
       es_version = version
 
       @log.info('Downloading Elasticsearch ' + es_extension + ' file.')

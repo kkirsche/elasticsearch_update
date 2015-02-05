@@ -33,11 +33,15 @@ response = Net::HTTP.post_form(@shutdown_uri, {})
 log.debug('Creating temporary file.')
 
 begin
-  update_file = Tempfile.new(['elasticsearch_update_file', '.deb'])
+  downloader = ElasticsearchUpdate::Downloader.new
+
+  extension = downloader.extension
+
+  update_file = Tempfile.new(['elasticsearch_update_file', extension])
 
   downloader = ElasticsearchUpdate::Downloader.new
 
-  downloader.download_elasticsearch(update_file)
+  downloader.download_elasticsearch(update_file, extension)
 
   sudo_passwd = ask('What password should be used while updating Elasticsearch?') { |q| q.echo = "x" }
 
