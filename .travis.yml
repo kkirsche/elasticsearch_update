@@ -10,3 +10,6 @@ before_install:
 
 gemfile:
   - Gemfile
+
+notifications:
+  email: false
