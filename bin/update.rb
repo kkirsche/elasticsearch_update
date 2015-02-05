@@ -32,14 +32,12 @@ response = Net::HTTP.post_form(@shutdown_uri, {})
 
 log.debug('Creating temporary file.')
 
+downloader = ElasticsearchUpdate::Downloader.new
+
+extension = downloader.extension
+
 begin
-  downloader = ElasticsearchUpdate::Downloader.new
-
-  extension = downloader.extension
-
   update_file = Tempfile.new(['elasticsearch_update_file', extension])
-
-  downloader = ElasticsearchUpdate::Downloader.new
 
   downloader.download_elasticsearch(update_file, extension)
 
