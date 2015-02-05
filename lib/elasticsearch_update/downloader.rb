@@ -1,4 +1,3 @@
-require 'highline/import'
 require 'logger'
 require 'digest/sha1'
 require 'tempfile'
@@ -6,84 +5,77 @@ require 'tempfile'
 module ElasticsearchUpdate
   # This class is in charge of retrieving and downloading data.
   class Downloader
-    def initialize
+    attr_reader :extension, :base, :version, :download_url, :verify_url
+    def initialize(hash, test = false)
       @log = Logger.new(STDOUT)
-      @log.level = Logger::INFO
+      if test
+        @log.level = Logger::INFO
+      else
+        @log.level = Logger::FATAL
+      end
 
       @log.debug('Logger created for Downloader.')
+
+      @extension = hash[:extension]
+      @base = hash[:base_url]
+      @version = hash[:version]
+      @download_url = 'https://' + @base + '/elasticsearch/elasticsearch/elasticsearch-' + @version + @extension
+      @verify_url = 'https://' + @base + '/elasticsearch/elasticsearch/elasticsearch-' + @version + @extension + '.sha1.txt'
     end
 
-    def download_elasticsearch(local_file, es_extension)
-      es_version = version
-
-      @log.info('Downloading Elasticsearch ' + es_extension + ' file.')
-      @base = 'download.elasticsearch.org'
+    def write_file_from_url(file, url)
       Net::HTTP.start(@base) do |http|
         begin
-          @file = 'elasticsearch-' + es_version + es_extension
-          http.request_get(
-            'https://' + @base + '/elasticsearch/elasticsearch/' + @file) do |resp|
+          http.request_get(url) do |resp|
             resp.read_body do |segment|
-              local_file.write(segment)
+              file.write(segment)
             end
           end
         ensure
-          local_file.close
+          file.close
         end
-
-        verify_file(local_file, es_extension, es_version)
       end
     end
 
-    def extension
-      choose do |menu|
-        menu.prompt = 'Which type of upgrade are we doing?  '
+    def download_file(test = false)
+      @update_file = Tempfile.new(['elasticsearch_update_file', @extension])
 
-        menu.choice(:deb) { @choice = '.deb' }
-        menu.choice(:zip) { @choice = '.zip' }
-        menu.choice(:rpm) { @choice = '.rpm' }
-        menu.choice(:tar) { @choice = '.tar.gz' }
-      end
+      @log.info('Downloading file from url.')
 
-      @choice
+      write_file_from_url(@update_file, @download_url) unless test
+
+      @update_file
     end
 
-    def version
-      ask('What version of Elasticsearch should we update to? (major.minor.path) ', String) { |q| q.validate = /\d\.\d\.\d/ }
-    end
-
-    def verify_file(local_file, ext, vers)
+    def verify_update_file
       @log.info('Beginning integrity check of downloaded file .')
-      @sha1 = Digest::SHA1.file(local_file.path).hexdigest
-
-      @sha1_file = Tempfile.new(['elasticsearch_sha1', '.txt'])
-
-      @log.info('Downloading Elasticsearch SHA1.')
-      @base = 'download.elasticsearch.org'
-      Net::HTTP.start(@base) do |http|
-        @file = 'elasticsearch-' + vers + ext + '.sha1.txt'
-        http.request_get(
-          'https://' + @base + '/elasticsearch/elasticsearch/' + @file) do |resp|
-          resp.read_body do |segment|
-            @sha1_file.write(segment)
-          end
-        end
-      end
-
-      @sha1_file.rewind
-
-      contents = @sha1_file.read
-
-      contents = contents.split(/\s\s/)
+      @sha1 = Digest::SHA1.file(@update_file.path).hexdigest
 
       @log.info('Verifying integrity of downloaded file.')
 
-      if contents[0] == @sha1
+      if download_remote_sha1 == @sha1
         @log.info('Integrity verified.')
         true
       else
         abort('File was not downloaded correctly. Please try again.')
       end
+    end
+
+    def download_remote_sha1
+      @sha1_file = Tempfile.new(['elasticsearch_sha1', '.txt'])
+
+      @log.info('Downloading Elasticsearch SHA1.')
+      write_file_from_url(@sha1_file, @verify_url)
+
+      @sha1_file.open
+
+      contents = @sha1_file.read
+
+      contents = contents.split(/\s\s/)
+
+      @sha1_file.unlink
+
+      contents[0]
     end
   end
 end
