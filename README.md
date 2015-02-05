@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/kkirsche/elasticsearch_update.svg?branch=master)](https://travis-ci.org/kkirsche/elasticsearch_update)
+
 # Elasticsearch Update
 
 This gem allows users to easily update their 1.0 and later Elasticsearch instance on the local machine from one of the following formats.
