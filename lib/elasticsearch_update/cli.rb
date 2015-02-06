@@ -16,11 +16,11 @@ module ElasticsearchUpdate
       es_client.shutdown_local_node
 
       downloader = ElasticsearchUpdate::Downloader.new(wizard.download_hash)
-
       file = downloader.download_file
       downloader.verify_update_file
 
-      puts file.path
+      installer = ElasticsearchUpdate::Installer.new(wizard.sudo_password, downloader.extension)
+      installer.install_file(file)
     end
   end
 end
