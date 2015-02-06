@@ -28,13 +28,13 @@ module ElasticsearchUpdate
 
     def install_deb_file(file)
       @log.info('Installing .deb file.')
-      command = 'echo ' + sudo_passwd + ' | sudo -S dpkg -i "' + file.path + '"'
+      command = 'echo ' + @sudo_password + ' | sudo -S dpkg -i "' + file.path + '"'
       system(command)
     end
 
     def install_rpm_file(file)
-      @log.info('Installing .deb file.')
-      command = 'echo ' + sudo_passwd + ' | sudo -S rpm -i "' + file.path + '"'
+      @log.info('Installing .rpm file.')
+      command = 'echo ' + @sudo_password + ' | sudo -S rpm -i "' + file.path + '"'
       system(command)
     end
   end
