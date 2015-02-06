@@ -30,7 +30,7 @@ module ElasticsearchUpdate
     def port
       response = ask('What is your Elasticsearch port? (Default: 9200) ', String)
 
-      9200 if response == ''
+      '9200' if response == ''
     end
 
     def es_location_hash
