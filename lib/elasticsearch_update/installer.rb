@@ -3,9 +3,14 @@ require 'logger'
 module ElasticsearchUpdate
   # This class is in charge of retrieving and downloading data.
   class Installer
-    def initialize(password, extension)
+    attr_accessor :sudo_password, :extension
+    def initialize(password, extension, test = false)
       @log = Logger.new(STDOUT)
-      @log.level = Logger::INFO
+      if test
+        @log.level = Logger::FATAL
+      else
+        @log.level = Logger::INFO
+      end
 
       @log.debug('Logger created for Installer.')
 
@@ -29,13 +34,13 @@ module ElasticsearchUpdate
     def install_deb_file(file)
       @log.info('Installing .deb file.')
       command = 'echo ' + @sudo_password + ' | sudo -S dpkg -i "' + file.path + '"'
-      system(command)
+      Kernel.system(command)
     end
 
     def install_rpm_file(file)
       @log.info('Installing .rpm file.')
       command = 'echo ' + @sudo_password + ' | sudo -S rpm -i "' + file.path + '"'
-      system(command)
+      Kernel.system(command)
     end
   end
 end
