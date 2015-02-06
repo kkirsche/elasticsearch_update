@@ -12,7 +12,7 @@ module TestElasticsearchUpdate
           extension: '.deb'
         }
 
-        @downloader = ElasticsearchUpdate::Downloader.new(hash)
+        @downloader = ElasticsearchUpdate::Downloader.new(hash, true)
       end
 
       it 'should initialize and correctly assign values.' do

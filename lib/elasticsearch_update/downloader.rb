@@ -1,6 +1,7 @@
 require 'logger'
 require 'digest/sha1'
 require 'tempfile'
+require 'open-uri'
 
 module ElasticsearchUpdate
   # This class is in charge of retrieving and downloading data.
@@ -62,20 +63,16 @@ module ElasticsearchUpdate
     end
 
     def download_remote_sha1
-      @sha1_file = Tempfile.new(['elasticsearch_sha1', '.txt'])
-
       @log.info('Downloading Elasticsearch SHA1.')
-      write_file_from_url(@sha1_file, @verify_url)
 
-      @sha1_file.open
+      @remote_sha1 = ''
+      open(@verify_url) do |file|
+        @remote_sha1 = file.read
+      end
 
-      contents = @sha1_file.read
+      @remote_sha1 = @remote_sha1.split(/\s\s/)[0]
 
-      contents = contents.split(/\s\s/)
-
-      @sha1_file.unlink
-
-      contents[0]
+      @remote_sha1
     end
   end
 end
