@@ -40,5 +40,15 @@ module ElasticsearchUpdate
 
       response
     end
+
+    def start_elasticsearch_service(password)
+      @log.info('Starting elasticsearch service')
+      system('echo ' + password + ' | sudo -S service elasticsearch start')
+    end
+
+    def start_elasticsearch_binary(path)
+      @log.info('Starting elasticsearch binary')
+      system(path + 'bin/elasticsearch')
+    end
   end
 end
