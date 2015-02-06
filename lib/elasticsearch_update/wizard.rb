@@ -22,11 +22,15 @@ module ElasticsearchUpdate
     end
 
     def host
-      response = ask('What is your Elasticsearch hostname? (Default: localhost) ', String) { |q| q.validate = /^([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])(\.([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]{0,61}[a-zA-Z0-9]))*$/ }
+      response = ask('What is your Elasticsearch hostname? (Default: localhost) ', String)
+
+      'localhost' if response == ''
     end
 
     def port
-      response = ask('What is your Elasticsearch port? (Default: 9200) ', String) { |q| q.validate = /^\d*$/ }
+      response = ask('What is your Elasticsearch port? (Default: 9200) ', String)
+
+      9200 if response == ''
     end
 
     def es_location_hash
