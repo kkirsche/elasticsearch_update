@@ -2,6 +2,7 @@ require 'elasticsearch_update/version'
 require 'elasticsearch_update/cli'
 require 'elasticsearch_update/downloader'
 require 'elasticsearch_update/elasticsearch'
+require 'elasticsearch_update/installer'
 require 'elasticsearch_update/version'
 require 'elasticsearch_update/wizard'
 
