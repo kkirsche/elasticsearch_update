@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["kev.kirsche@gmail.com"]
   spec.summary       = %q{Updates the elasticsearch instance on the local machine.}
   spec.description   = %q{Updates the elasticsearch instance from a deb, zip, tar, or rpm on the local machine.}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/kkirsche/elasticsearch_update"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
