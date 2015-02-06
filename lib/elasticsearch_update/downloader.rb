@@ -50,11 +50,11 @@ module ElasticsearchUpdate
 
     def verify_update_file
       @log.info('Beginning integrity check of downloaded file .')
-      @sha1 = Digest::SHA1.file(@update_file.path).hexdigest
+      @file_sha1 = Digest::SHA1.file(@update_file.path).hexdigest
 
       @log.info('Verifying integrity of downloaded file.')
 
-      if download_remote_sha1 == @sha1
+      if download_remote_sha1 == @file_sha1
         @log.info('Integrity verified.')
         true
       else
