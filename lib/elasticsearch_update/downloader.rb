@@ -10,9 +10,9 @@ module ElasticsearchUpdate
     def initialize(hash, test = false)
       @log = Logger.new(STDOUT)
       if test
-        @log.level = Logger::INFO
-      else
         @log.level = Logger::FATAL
+      else
+        @log.level = Logger::INFO
       end
 
       @log.debug('Logger created for Downloader.')
