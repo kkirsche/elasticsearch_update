@@ -40,8 +40,12 @@ module ElasticsearchUpdate
       }
     end
 
+    def elasticsearch_fs_location
+      ask('In what directory does Elasticsearch run? ', String)
+    end
+
     def sudo_password
-      ask('What password should be used while updating Elasticsearch?') { |q| q.echo = "x" }
+      ask('What password should be used while updating Elasticsearch? ') { |q| q.echo = "x" }
     end
 
     def download_hash
