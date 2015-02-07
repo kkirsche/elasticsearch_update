@@ -42,5 +42,9 @@ module ElasticsearchUpdate
       command = 'echo ' + @sudo_password + ' | sudo -S rpm -i "' + file.path + '"'
       Kernel.system(command)
     end
+
+    def unzip_file(file)
+      
+    end
   end
 end
