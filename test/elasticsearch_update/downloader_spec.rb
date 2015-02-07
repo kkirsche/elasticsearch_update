@@ -4,7 +4,8 @@ module TestElasticsearchUpdate
   # The TestDownloader class below tests the Downloader class from the library
   class TestDownloader < Minitest::Test
     describe 'Downloader', 'Used to download and verify Elasticsearch file' do
-      def setup
+
+      it 'should initialize and correctly assign values.' do
         hash =
         {
           base_url: 'download.elasticsearch.org',
@@ -13,9 +14,6 @@ module TestElasticsearchUpdate
         }
 
         @downloader = ElasticsearchUpdate::Downloader.new(hash, true)
-      end
-
-      it 'should initialize and correctly assign values.' do
         assert_kind_of ElasticsearchUpdate::Downloader, @downloader
 
         @downloader.base.must_equal 'download.elasticsearch.org'
@@ -26,10 +24,31 @@ module TestElasticsearchUpdate
       end
 
       it 'should retrieve the correct SHA1 value from Elasticsearch\'s website' do
-        @downloader.download_remote_sha1.must_equal 'd377e39343e5cc277104beee349e1578dc50f7f8'
+        hash =
+        {
+          base_url: 'download.elasticsearch.org',
+          version: '1.4.2',
+          extension: '.deb'
+        }
+
+        @mock_file = Minitest::Mock.new
+        @mock_file.expect(:read, 'd377e39343e5cc277104beee349e1578dc50f7f8  elasticsearch-1.4.2.deb')
+
+        Kernel.stub :open, nil, @mock_file do
+          @downloader = ElasticsearchUpdate::Downloader.new(hash, true)
+          @downloader.download_remote_sha1.must_equal 'd377e39343e5cc277104beee349e1578dc50f7f8'
+        end
       end
 
       it 'creates a tempfile to store the Elasticsearch deb file' do
+        hash =
+        {
+          base_url: 'download.elasticsearch.org',
+          version: '1.4.2',
+          extension: '.deb'
+        }
+
+        @downloader = ElasticsearchUpdate::Downloader.new(hash, true)
         assert_kind_of Tempfile, @downloader.download_file(true)
       end
     end
