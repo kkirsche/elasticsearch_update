@@ -6,7 +6,7 @@ module ElasticsearchUpdate
     describe 'Installer', 'Used to install Elasticsearch file' do
 
       it 'should initialize and correctly assign values.' do
-        @installer = ElasticsearchUpdate::Installer.new('test_password', '.deb', true)
+        @installer = ElasticsearchUpdate::Installer.new('test_password', '.deb', false)
         assert_kind_of ElasticsearchUpdate::Installer, @installer
 
         @installer.sudo_password.must_equal 'test_password'
