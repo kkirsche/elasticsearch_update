@@ -1,6 +1,12 @@
 require 'minitest_helper'
 
 module ElasticsearchUpdate
+  class TestDownloader < Downloader
+    def open(_url, &b)
+      b.call StringIO.new "d377e39343e5cc277104beee349e1578dc50f7f8  elasticsearch-1.4.2.deb"
+    end
+  end
+
   # The TestDownloader class below tests the Downloader class from the library
   class TestDownloader < Minitest::Test
     describe 'Downloader', 'Used to download and verify Elasticsearch file' do
@@ -35,7 +41,10 @@ module ElasticsearchUpdate
         @mock_file.expect(:read, 'd377e39343e5cc277104beee349e1578dc50f7f8  elasticsearch-1.4.2.deb')
 
         Kernel.stub :open, nil, @mock_file do
-          @downloader = ElasticsearchUpdate::Downloader.new(hash, true)
+          @downloader = TestDownloader.new(hash, true)
+          @downloader.download_remote_sha1.must_equal 'd377e39343e5cc277104beee349e1578dc50f7f8'
+        end
+      end
           @downloader.download_remote_sha1.must_equal 'd377e39343e5cc277104beee349e1578dc50f7f8'
         end
       end
