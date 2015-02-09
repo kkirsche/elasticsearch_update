@@ -59,8 +59,6 @@ module ElasticsearchUpdate
 
       @log.info('Verifying integrity of downloaded file.')
 
-      puts download_remote_sha1
-
       if download_remote_sha1 == @file_sha1
         @log.info('Integrity verified.')
         true
