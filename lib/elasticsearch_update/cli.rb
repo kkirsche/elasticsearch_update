@@ -12,7 +12,7 @@ module ElasticsearchUpdate
       wizard = ElasticsearchUpdate::Wizard.new
 
       es_client = ElasticsearchUpdate::Elasticsearch.new(wizard.es_location_hash)
-      es_client.disable_cluster_routing_allocation
+      es_client.cluster_routing_allocation('none')
       es_client.shutdown_local_node
 
       downloader = ElasticsearchUpdate::Downloader.new(wizard.download_hash)

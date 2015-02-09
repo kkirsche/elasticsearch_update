@@ -25,7 +25,7 @@ module ElasticsearchUpdate
         @mock_http.expect(:start, 200)
 
         Net::HTTP.stub :new, @mock_http do
-          @es_client.disable_cluster_routing_allocation.must_equal 200
+          @es_client.cluster_routing_allocation('none').must_equal 200
         end
       end
 
@@ -36,7 +36,7 @@ module ElasticsearchUpdate
         @mock_http.expect(:start, 200)
 
         Net::HTTP.stub :new, @mock_http do
-          @es_client.enable_cluster_routing_allocation.must_equal 200
+          @es_client.cluster_routing_allocation('all').must_equal 200
         end
       end
 

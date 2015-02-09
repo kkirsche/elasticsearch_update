@@ -20,31 +20,13 @@ module ElasticsearchUpdate
       @es_port = hash[:port]
     end
 
-    def disable_cluster_routing_allocation
+    def cluster_routing_allocation(type)
       @log.info('Disabling cluster routing allocation')
 
       begin
         req = Net::HTTP::Put.new('/_cluster/settings',
                                  'Content-Type' => 'application/javascript')
-        req.body = { transient: { 'cluster.routing.allocation.enable' => 'none' } }
-        req.body = req.body.to_json
-        response = Net::HTTP.new(@es_host, @es_port).start {|http| http.request(req) }
-      rescue Errno::ECONNREFUSED
-        puts 'Connection could not be made to Elasticsearch at'
-        puts @es_host + ':' + @es_port + '/_cluster/settings'
-        abort('Please verify that Elasticsearch is available at this address.')
-      end
-
-      response
-    end
-
-    def enable_cluster_routing_allocation
-      @log.info('Enabling cluster routing allocation')
-
-      begin
-        req = Net::HTTP::Put.new('/_cluster/settings',
-                                 'Content-Type' => 'application/javascript')
-        req.body = { transient: { 'cluster.routing.allocation.enable' => 'all' } }
+        req.body = { transient: { 'cluster.routing.allocation.enable' => type } }
         req.body = req.body.to_json
         response = Net::HTTP.new(@es_host, @es_port).start {|http| http.request(req) }
       rescue Errno::ECONNREFUSED
