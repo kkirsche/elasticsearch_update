@@ -34,6 +34,14 @@ module ElasticsearchUpdate
           @es_client.enable_cluster_routing_allocation.must_equal 200
         end
       end
+
+      it 'should shutdown the local node' do
+        @es_client = Elasticsearch.new({ host: 'localhost', port: 9200 }, true)
+
+        Net::HTTP.stub :post_form, 200 do
+          @es_client.shutdown_local_node.must_equal 200
+        end
+      end
     end
   end
 end
