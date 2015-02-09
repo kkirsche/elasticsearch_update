@@ -5,6 +5,7 @@ require 'net/http'
 module ElasticsearchUpdate
   # This class is in charge of retrieving and downloading data.
   class Elasticsearch
+    attr_reader :es_host, :es_port
     def initialize(hash = { host: 'localhost', port: 9200 })
       @log = Logger.new(STDOUT)
       @log.level = Logger::INFO
