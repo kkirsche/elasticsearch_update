@@ -7,11 +7,11 @@ module ElasticsearchUpdate
     end
   end
   # The TestInstaller class below tests the Downloader class from the library
-  class TestElasticsearch < Minitest::Test
+  class TestElasticsearch
     describe 'Elasticsearch', 'Used to interact with Elasticsearch' do
 
       it 'should initialize without errors' do
-        @es_client = Elasticsearch.new
+        @es_client = TestElasticsearch.new
         assert_kind_of Elasticsearch, @es_client
 
         @es_client.es_port.must_equal 9200
@@ -19,7 +19,7 @@ module ElasticsearchUpdate
       end
 
       it 'should disable cluster allocation' do
-        @es_client = Elasticsearch.new({ host: 'localhost', port: 9200 }, true)
+        @es_client = TestElasticsearch.new({ host: 'localhost', port: 9200 }, true)
 
         @mock_http = Minitest::Mock.new
         @mock_http.expect(:start, 200)
@@ -30,7 +30,7 @@ module ElasticsearchUpdate
       end
 
       it 'should enable cluster allocation' do
-        @es_client = Elasticsearch.new({ host: 'localhost', port: 9200 }, true)
+        @es_client = TestElasticsearch.new({ host: 'localhost', port: 9200 }, true)
 
         @mock_http = Minitest::Mock.new
         @mock_http.expect(:start, 200)
@@ -41,7 +41,7 @@ module ElasticsearchUpdate
       end
 
       it 'should shutdown the local node' do
-        @es_client = Elasticsearch.new({ host: 'localhost', port: 9200 }, true)
+        @es_client = TestElasticsearch.new({ host: 'localhost', port: 9200 }, true)
 
         Net::HTTP.stub :post_form, 200 do
           @es_client.shutdown_local_node.must_equal 200
