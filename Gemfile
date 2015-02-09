@@ -7,3 +7,4 @@ gem 'rake'
 gem 'minitest'
 gem 'bundler'
 gem 'rubyzip'
+gem "codeclimate-test-reporter", group: :test, require: nil
