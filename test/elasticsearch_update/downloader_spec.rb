@@ -79,6 +79,30 @@ module ElasticsearchUpdate
         @downloader = TestDownloader.new(hash, true)
         assert_kind_of Tempfile, @downloader.download_file(true)
       end
+
+      it 'writes a downloaded file' do
+        hash =
+        {
+          base_url: 'download.elasticsearch.org',
+          version: '1.4.2',
+          extension: '.deb'
+        }
+
+        @mock_resp = Minitest::Mock.new
+        @mock_resp.expect(:read_body, 'Test')
+
+        @mock_http = Minitest::Mock.new
+        @mock_http.expect(:request_get, @mock_resp, [String])
+
+        @mock_file = Minitest::Mock.new
+        @mock_file.expect(:write, true, [String])
+        @mock_file.expect(:close, true)
+
+        @downloader = TestDownloader.new(hash, true)
+        Net::HTTP.stub :start, true, @mock_http do
+          @downloader.write_file_from_url(@mock_file, 'http://test.org')
+        end
+      end
     end
   end
 end
