@@ -73,5 +73,18 @@ module ElasticsearchUpdate
       @log.info('Starting elasticsearch binary')
       system(path + 'bin/elasticsearch')
     end
+
+    def start_elasticsearch(installer_obj)
+      case installer_obj.extension
+      when '.zip'
+        start_elasticsearch_binary(wizard.test)
+      when '.deb'
+        start_elasticsearch_service(installer_obj.sudo_password)
+      when '.rpm'
+        start_elasticsearch_service(installer_obj.sudo_password)
+      when '.tar.gz'
+
+      end
+    end
   end
 end
