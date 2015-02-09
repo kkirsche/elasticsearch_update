@@ -6,9 +6,13 @@ module ElasticsearchUpdate
   # This class is in charge of retrieving and downloading data.
   class Elasticsearch
     attr_reader :es_host, :es_port
-    def initialize(hash = { host: 'localhost', port: 9200 })
+    def initialize(hash = { host: 'localhost', port: 9200 }, test = false)
       @log = Logger.new(STDOUT)
-      @log.level = Logger::INFO
+      if test
+        @log.level = Logger::FATAL
+      else
+        @log.level = Logger::INFO
+      end
 
       @log.debug('Logger created for Elasticsearch.')
 
