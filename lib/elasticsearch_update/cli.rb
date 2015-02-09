@@ -21,6 +21,8 @@ module ElasticsearchUpdate
 
       installer = ElasticsearchUpdate::Installer.new(wizard.sudo_password, downloader.extension)
       installer.install_file(file)
+
+      es_client.start_elasticsearch(installer)
     end
   end
 end
