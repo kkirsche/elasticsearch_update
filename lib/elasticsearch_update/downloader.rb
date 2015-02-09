@@ -7,6 +7,7 @@ module ElasticsearchUpdate
   # This class is in charge of retrieving and downloading data.
   class Downloader
     attr_reader :extension, :base, :version, :download_url, :verify_url
+    attr_accessor :update_file
     def initialize(hash, test = false)
       @log = Logger.new(STDOUT)
       if test
@@ -57,6 +58,8 @@ module ElasticsearchUpdate
       @file_sha1 = Digest::SHA1.file(@update_file.path).hexdigest
 
       @log.info('Verifying integrity of downloaded file.')
+
+      puts download_remote_sha1
 
       if download_remote_sha1 == @file_sha1
         @log.info('Integrity verified.')

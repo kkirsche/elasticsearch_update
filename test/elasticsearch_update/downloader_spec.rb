@@ -54,11 +54,17 @@ module ElasticsearchUpdate
           extension: '.deb'
         }
 
-        @mock_result = StringIO.new 'd377e39343e5cc277104beee349e1578dc50f7f8  elasticsearch-1.4.2.deb'
+        @mock_file_obj = Minitest::Mock.new
+        @mock_result = 'd377e39343e5cc277104beee349e1578dc50f7f8'
+        @mock_file_obj.expect(:hexdigest, @mock_result)
 
-        Digest::SHA1.stub :file, @mock_result do
+        @mock_file = Minitest::Mock.new
+        @mock_file.expect(:path, 'fake/path')
+
+        Digest::SHA1.stub :file, @mock_file_obj do
           @downloader = TestDownloader.new(hash, true)
-          @downloader.download_remote_sha1.must_equal 'd377e39343e5cc277104beee349e1578dc50f7f8'
+          @downloader.update_file = @mock_file
+          @downloader.verify_update_file.must_equal true
         end
       end
 
