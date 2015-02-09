@@ -5,6 +5,10 @@ module ElasticsearchUpdate
     def open(_url, &b)
       b.call StringIO.new "d377e39343e5cc277104beee349e1578dc50f7f8  elasticsearch-1.4.2.deb"
     end
+
+    def abort(string)
+      string
+    end
   end
 
   # The TestDownloader class below tests the Downloader class from the library
@@ -65,6 +69,28 @@ module ElasticsearchUpdate
           @downloader = TestDownloader.new(hash, true)
           @downloader.update_file = @mock_file
           @downloader.verify_update_file.must_equal true
+        end
+      end
+
+      it "should retrieve the verify the file's SHA1 value against Elasticsearch's" do
+        hash =
+        {
+          base_url: 'download.elasticsearch.org',
+          version: '1.4.2',
+          extension: '.deb'
+        }
+
+        @mock_file_obj = Minitest::Mock.new
+        @mock_result = '0'
+        @mock_file_obj.expect(:hexdigest, @mock_result)
+
+        @mock_file = Minitest::Mock.new
+        @mock_file.expect(:path, 'fake/path')
+
+        Digest::SHA1.stub :file, @mock_file_obj do
+          @downloader = TestDownloader.new(hash, true)
+          @downloader.update_file = @mock_file
+          @downloader.verify_update_file.must_equal 'File was not downloaded correctly. Please try again.'
         end
       end
 
