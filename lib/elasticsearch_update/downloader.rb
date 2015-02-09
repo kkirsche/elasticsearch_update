@@ -66,7 +66,7 @@ module ElasticsearchUpdate
       @log.info('Downloading Elasticsearch SHA1.')
 
       @remote_sha1 = ''
-      Kernel.open(@verify_url) do |file|
+      open(@verify_url) do |file|
         @remote_sha1 = file.read
       end
 
