@@ -20,8 +20,12 @@ module ElasticsearchUpdate
       @extension = hash[:extension]
       @base = hash[:base_url]
       @version = hash[:version]
-      @download_url = 'https://' + @base + '/elasticsearch/elasticsearch/elasticsearch-' + @version + @extension
-      @verify_url = 'https://' + @base + '/elasticsearch/elasticsearch/elasticsearch-' + @version + @extension + '.sha1.txt'
+      @download_url = 'https://' + @base +
+                      '/elasticsearch/elasticsearch/elasticsearch-' + @version +
+                      @extension
+      @verify_url = 'https://' + @base +
+                    '/elasticsearch/elasticsearch/elasticsearch-' + @version +
+                    @extension + '.sha1.txt'
     end
 
     def write_file_from_url(file, url)
