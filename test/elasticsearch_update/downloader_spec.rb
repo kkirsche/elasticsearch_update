@@ -8,7 +8,7 @@ module ElasticsearchUpdate
   end
 
   # The TestDownloader class below tests the Downloader class from the library
-  class TestDownloader < Minitest::Test
+  class TestDownloader
     describe 'Downloader', 'Used to download and verify Elasticsearch file' do
 
       it 'should initialize and correctly assign values.' do
@@ -19,7 +19,7 @@ module ElasticsearchUpdate
           extension: '.deb'
         }
 
-        @downloader = ElasticsearchUpdate::Downloader.new(hash, true)
+        @downloader = TestDownloader.new(hash, true)
         assert_kind_of ElasticsearchUpdate::Downloader, @downloader
 
         @downloader.base.must_equal 'download.elasticsearch.org'
@@ -70,7 +70,7 @@ module ElasticsearchUpdate
           extension: '.deb'
         }
 
-        @downloader = ElasticsearchUpdate::Downloader.new(hash, true)
+        @downloader = TestDownloader.new(hash, true)
         assert_kind_of Tempfile, @downloader.download_file(true)
       end
     end
