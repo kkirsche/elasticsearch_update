@@ -3,7 +3,6 @@ require 'highline/import'
 module ElasticsearchUpdate
   # This class is in charge of retrieving and downloading data.
   class Wizard
-
     def extension
       choose do |menu|
         menu.prompt = 'Which type of upgrade are we doing?  '
@@ -23,14 +22,17 @@ module ElasticsearchUpdate
 
     def host
       response = ask('What is your Elasticsearch hostname? (Default: localhost) ', String)
+      response = 'localhost' if response == ''
 
-      'localhost' if response == ''
+      response
     end
 
     def port
       response = ask('What is your Elasticsearch port? (Default: 9200) ', String)
 
-      '9200' if response == ''
+      response = '9200' if response == ''
+
+      response
     end
 
     def es_location_hash
