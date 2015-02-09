@@ -1,6 +1,6 @@
 require 'minitest_helper'
 
-module TestElasticsearchUpdate
+module ElasticsearchUpdate
   # The TestDownloader class below tests the Downloader class from the library
   class TestInstaller < Minitest::Test
     describe 'Installer', 'Used to install Elasticsearch file' do
