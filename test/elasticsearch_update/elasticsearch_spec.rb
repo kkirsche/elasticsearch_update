@@ -55,6 +55,14 @@ module ElasticsearchUpdate
 
         result.must_equal 'echo test | sudo -S service elasticsearch start'
       end
+
+      it 'start elasticsearch binary' do
+        @es_client = TestElasticsearch.new({ host: 'localhost', port: 9200 }, true)
+
+        result = @es_client.start_elasticsearch_binary('/path/to/elasticsearch/')
+
+        result.must_equal '/path/to/elasticsearch/bin/elasticsearch'
+      end
     end
   end
 end
