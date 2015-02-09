@@ -27,6 +27,14 @@ module ElasticsearchUpdate
         result.must_equal 'Question asked.'
       end
 
+      it 'should ask for the desired Elasticsearch version' do
+        wizard = TestWizard.new
+
+        result = wizard.version
+
+        result.must_equal 'Question asked.'
+      end
+
       it "should ask for Elasticsearch's port" do
         wizard = TestWizard.new
 
@@ -59,12 +67,22 @@ module ElasticsearchUpdate
         result.must_equal 'Question asked.'
       end
 
-      it "should ask for the desired extension of the update file" do
+      it 'should ask for the desired extension of the update file' do
         wizard = TestWizard.new
 
         result = wizard.extension
 
         result.must_equal '.deb'
+      end
+
+      it 'should create the download hash' do
+        wizard = TestWizard.new
+
+        result = wizard.download_hash
+
+        result.must_equal(base_url: 'download.elasticsearch.org',
+                          version: 'Question asked.',
+                          extension: '.deb')
       end
     end
   end
