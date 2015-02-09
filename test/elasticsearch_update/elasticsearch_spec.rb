@@ -63,6 +63,30 @@ module ElasticsearchUpdate
 
         result.must_equal '/path/to/elasticsearch/bin/elasticsearch'
       end
+
+      it 'start elasticsearch service from the deb extension' do
+        @mock = Minitest::Mock.new
+        @mock.expect(:extension, '.deb')
+        @mock.expect(:sudo_password, 'test')
+
+        @es_client = TestElasticsearch.new({ host: 'localhost', port: 9200 }, true)
+
+        result = @es_client.start_elasticsearch(@mock)
+
+        result.must_equal 'echo test | sudo -S service elasticsearch start'
+      end
+
+      it 'start elasticsearch service from the rpm extension' do
+        @mock = Minitest::Mock.new
+        @mock.expect(:extension, '.rpm')
+        @mock.expect(:sudo_password, 'test')
+
+        @es_client = TestElasticsearch.new({ host: 'localhost', port: 9200 }, true)
+
+        result = @es_client.start_elasticsearch(@mock)
+
+        result.must_equal 'echo test | sudo -S service elasticsearch start'
+      end
     end
   end
 end
