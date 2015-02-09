@@ -19,7 +19,7 @@ module ElasticsearchUpdate
           extension: '.deb'
         }
 
-        @downloader = TestDownloader.new(hash, true)
+        @downloader = TestDownloader.new(hash, false)
         assert_kind_of ElasticsearchUpdate::Downloader, @downloader
 
         @downloader.base.must_equal 'download.elasticsearch.org'
