@@ -47,6 +47,14 @@ module ElasticsearchUpdate
           @es_client.shutdown_local_node.must_equal 200
         end
       end
+
+      it 'start elasticsearch service' do
+        @es_client = TestElasticsearch.new({ host: 'localhost', port: 9200 }, true)
+
+        result = @es_client.start_elasticsearch_service('test')
+
+        result.must_equal 'echo test | sudo -S service elasticsearch start'
+      end
     end
   end
 end
