@@ -23,28 +23,27 @@ module ElasticsearchUpdate
       when '.zip'
 
       when '.deb'
-        install_deb_file(file)
+        install_update_file(file, @extension)
       when '.rpm'
-        install_rpm_file(file)
+        install_update_file(file, @extension)
       when '.tar.gz'
 
       end
     end
 
-    def install_deb_file(file)
-      @log.info('Installing .deb file.')
-      command = 'echo ' + @sudo_password + ' | sudo -S dpkg -i "' + file.path + '"'
-      Kernel.system(command)
-    end
-
-    def install_rpm_file(file)
-      @log.info('Installing .rpm file.')
-      command = 'echo ' + @sudo_password + ' | sudo -S rpm -i "' + file.path + '"'
+    def install_update_file(file, extension)
+      @log.info('Installing' + extension + 'file.')
+      command = 'echo ' + @sudo_password + ' | '
+      case extension
+      when '.deb'
+        command += 'sudo -S dpkg -i "' + file.path + '"'
+      when '.rpm'
+        command += 'sudo -S rpm -i "' + file.path + '"'
+      end
       Kernel.system(command)
     end
 
     def unzip_file(file)
-      
     end
   end
 end
