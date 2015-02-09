@@ -70,9 +70,14 @@ module ElasticsearchUpdate
       it 'should ask for the desired extension of the update file' do
         wizard = TestWizard.new
 
-        result = wizard.extension
+        @mock_menu = Minitest::Mock.new
+        @mock_menu.expect(:prompt, true)
+        @mock_menu.expect(:choice, '.deb')
 
-        result.must_equal '.deb'
+        TestWizard.stub :choose, '.deb', @mock_menu do
+          result = wizard.extension
+          result.must_equal '.deb'
+        end
       end
 
       it 'should create the download hash' do
