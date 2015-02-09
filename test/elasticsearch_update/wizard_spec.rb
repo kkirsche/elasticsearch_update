@@ -5,6 +5,10 @@ module ElasticsearchUpdate
     def ask(_question, _type = String, &_block)
       'Question asked.'
     end
+
+    def choose(&_block)
+      @choice = '.deb'
+    end
   end
   # The TestInstaller class below tests the Downloader class from the library
   class TestWizard
@@ -53,6 +57,14 @@ module ElasticsearchUpdate
         result = wizard.sudo_password
 
         result.must_equal 'Question asked.'
+      end
+
+      it "should ask for the desired extension of the update file" do
+        wizard = TestWizard.new
+
+        result = wizard.extension
+
+        result.must_equal '.deb'
       end
     end
   end
