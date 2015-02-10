@@ -36,6 +36,30 @@ module ElasticsearchUpdate
           response.must_equal true
         end
       end
+
+      it 'should install the .zip file' do
+        @mock_file = Minitest::Mock.new
+        @mock_file.expect(:path, '/path/to/file.rpm')
+
+        Kernel.stub :system, true do
+          @installer = ElasticsearchUpdate::Installer.new('test_password', '.zip', true)
+          response = @installer.install_file(@mock_file)
+
+          response.must_equal true
+        end
+      end
+
+      it 'should install the .rpm file' do
+        @mock_file = Minitest::Mock.new
+        @mock_file.expect(:path, '/path/to/file.rpm')
+
+        Kernel.stub :system, true do
+          @installer = ElasticsearchUpdate::Installer.new('test_password', '.tar.gz', true)
+          response = @installer.install_file(@mock_file)
+
+          response.must_equal true
+        end
+      end
     end
   end
 end

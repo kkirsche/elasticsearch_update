@@ -11,7 +11,7 @@ module ElasticsearchUpdate
 
       wizard = ElasticsearchUpdate::Wizard.new
 
-      es_client = ElasticsearchUpdate::Elasticsearch.new(wizard.es_location_hash)
+      es_client = ElasticsearchUpdate::Elasticsearch.new wizard.es_location_hash
       es_client.cluster_routing_allocation('none')
       es_client.shutdown_local_node
 
@@ -19,7 +19,8 @@ module ElasticsearchUpdate
       file = downloader.download_file
       downloader.verify_update_file
 
-      installer = ElasticsearchUpdate::Installer.new(wizard.sudo_password, downloader.extension)
+      installer = ElasticsearchUpdate::Installer.new(wizard.sudo_password,
+                                                     downloader.extension)
       installer.install_file(file)
 
       es_client.start_elasticsearch(installer)

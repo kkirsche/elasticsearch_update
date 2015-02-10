@@ -21,13 +21,13 @@ module ElasticsearchUpdate
     def install_file(file)
       case @extension
       when '.zip'
-
+        true
       when '.deb'
         install_update_file(file, @extension)
       when '.rpm'
         install_update_file(file, @extension)
       when '.tar.gz'
-
+        true
       end
     end
 
