@@ -9,15 +9,19 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Kevin Kirsche"]
   spec.email         = ["kev.kirsche@gmail.com"]
   spec.summary       = %q{Updates the elasticsearch instance on the local machine.}
-  spec.description   = %q{Updates the elasticsearch instance from a deb, zip, tar, or rpm on the local machine.}
+  spec.description   = %q{Updates the elasticsearch instance from a deb or rpm on the local machine. Assumes elasticsearch is a service.}
   spec.homepage      = "https://github.com/kkirsche/elasticsearch_update"
   spec.license       = "MIT"
 
+  spec.required_ruby_version = '>= 2.0.0'
+
   spec.files         = `git ls-files -z`.split("\x0")
-  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  spec.executables   << 'elasticsearch_update'
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "minitest", "5.4.3"
+  spec.add_runtime_dependency 'highline', '1.6.21'
 end

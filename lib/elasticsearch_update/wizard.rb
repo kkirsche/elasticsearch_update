@@ -8,9 +8,9 @@ module ElasticsearchUpdate
         menu.prompt = 'Which type of upgrade are we doing?  '
 
         menu.choice(:deb) { @choice = '.deb' }
-        menu.choice(:zip) { @choice = '.zip' }
+        # menu.choice(:zip) { @choice = '.zip' }
         menu.choice(:rpm) { @choice = '.rpm' }
-        menu.choice(:tar) { @choice = '.tar.gz' }
+        # menu.choice(:tar) { @choice = '.tar.gz' }
       end
 
       @choice

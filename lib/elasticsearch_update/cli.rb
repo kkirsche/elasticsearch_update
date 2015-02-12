@@ -9,21 +9,24 @@ module ElasticsearchUpdate
 
       @log.debug('Logger created for CLI.')
 
-      wizard = ElasticsearchUpdate::Wizard.new
+      wizard = Wizard.new
 
-      es_client = ElasticsearchUpdate::Elasticsearch.new wizard.es_location_hash
+      es_client = Elasticsearch.new wizard.es_location_hash
       es_client.cluster_routing_allocation('none')
       es_client.shutdown_local_node
 
-      downloader = ElasticsearchUpdate::Downloader.new(wizard.download_hash)
+      downloader = Downloader.new(wizard.download_hash)
       file = downloader.download_file
       downloader.verify_update_file
 
-      installer = ElasticsearchUpdate::Installer.new(wizard.sudo_password,
-                                                     downloader.extension)
+      installer = Installer.new(wizard.sudo_password,
+                                downloader.extension)
       installer.install_file(file)
 
       es_client.start_elasticsearch(installer)
+      @log.info('Waiting for Elasticsearch to start.')
+      sleep 10
+      es_client.cluster_routing_allocation('all')
     end
   end
 end
