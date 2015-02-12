@@ -131,6 +131,10 @@ a {
     color: #74b73f;
 }
 
+a:hover {
+    color:#acde84
+}
+
 code {
     background-color: #f9faf6;
     border-radius: 5px;
