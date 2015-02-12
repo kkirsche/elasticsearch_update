@@ -1,8 +1,20 @@
 require 'logger'
 
 module ElasticsearchUpdate
-  # This class is in charge of retrieving and downloading data.
+  # == CLI
+  # ElasticsearchUpdate::Cli class is used to begin application execution
+  # and walks the user through the update process
+  #
+  # == Parameters
+  #
+  # Start takes no parameters or options.
   class Cli
+    # Start the command line update process which calls all necessary
+    # methods and classes to complete an Elasticsearch update.
+    #
+    # ==== Example
+    #
+    #    ElasticsearchUpdate::Cli.start
     def self.start
       @log = Logger.new(STDOUT)
       @log.level = Logger::INFO
