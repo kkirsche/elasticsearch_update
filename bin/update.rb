@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 require 'elasticsearch_update'
 
 ElasticsearchUpdate::Cli.start if __FILE__ == $PROGRAM_NAME
