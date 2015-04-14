@@ -5,7 +5,7 @@ Rake::TestTask.new(:test) do |t|
   t.libs << "test/"
   t.libs << "bin/"
   t.libs << "lib/"
-  t.pattern = "test/elasticsearch_update/*_spec.rb"
+  t.pattern = "test/elasticsearch_update/**/*_spec.rb"
 end
 
 task :default => :test
