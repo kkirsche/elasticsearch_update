@@ -1,11 +1,13 @@
 require 'minitest_helper'
 
 module ElasticsearchUpdate
+  # Overrides the std Elasticsearch class for testing purposes
   class TestElasticsearch < Elasticsearch
     def system(command)
       command
     end
   end
+
   # The TestInstaller class below tests the Downloader class from the library
   class TestElasticsearch
     describe 'Elasticsearch', 'Used to interact with Elasticsearch' do
