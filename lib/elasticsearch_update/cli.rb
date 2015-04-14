@@ -27,7 +27,7 @@ module ElasticsearchUpdate
       es_client.cluster_routing_allocation('none')
       es_client.shutdown_local_node
 
-      downloader = Downloader.new(wizard.download_hash)
+      downloader = Downloader.new(wizard.prepare_for_download)
       file = downloader.download_file
       downloader.verify_update_file
 

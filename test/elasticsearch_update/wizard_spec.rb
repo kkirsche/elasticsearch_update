@@ -93,7 +93,7 @@ module ElasticsearchUpdate
                       'h/elasticsearch-Question asked..deb.sha1.txt'
         }
 
-        result = wizard.download_hash
+        result = wizard.prepare_for_download
         assert_kind_of ElasticsearchUpdate::Download, result
       end
 
@@ -109,7 +109,7 @@ module ElasticsearchUpdate
                       'h/elasticsearch-Question asked..deb.sha1.txt'
         }
 
-        result = wizard.download_hash
+        result = wizard.prepare_for_download
         assert_kind_of ElasticsearchUpdate::Download, result
         result.to_h.must_equal hash
       end
@@ -126,7 +126,7 @@ module ElasticsearchUpdate
                  'rch/elasticsearch-Question asked..deb.sha1.txt']
         ]
 
-        result = wizard.download_hash
+        result = wizard.prepare_for_download
         result.to_a.must_equal array
       end
     end

@@ -180,8 +180,8 @@ module ElasticsearchUpdate
       end
     end
 
-    # == download_hash
-    # download_hash is used to construct the hash used by the Downloader
+    # == prepare_for_download
+    # prepare_for_download is used to construct the hash used by the Downloader
     #
     # == Parameters
     #
@@ -194,8 +194,8 @@ module ElasticsearchUpdate
     # == Example
     #
     #    wizard = ElasticsearchUpdate::Wizard.new
-    #    hash = wizard.download_hash
-    def download_hash
+    #    hash = wizard.prepare_for_download
+    def prepare_for_download
       Download.new version: version, extension: extension
     end
   end
