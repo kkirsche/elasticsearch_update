@@ -14,8 +14,8 @@ module ElasticsearchUpdate
     #
     # ==== Example
     #
-    #    ElasticsearchUpdate::Cli.start
-    def self.start
+    #    ElasticsearchUpdate::Cli.new
+    def initialize
       @log = Logger.new(STDOUT)
       @log.level = Logger::INFO
 
