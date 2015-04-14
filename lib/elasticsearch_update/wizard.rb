@@ -175,7 +175,9 @@ module ElasticsearchUpdate
     #    wizard = ElasticsearchUpdate::Wizard.new
     #    password = wizard.sudo_password
     def sudo_password
-      ask('What password should be used while updating Elasticsearch? ') { |q| q.echo = "x" }
+      ask('What password should be used while updating Elasticsearch? ') do |q|
+        q.echo = 'x'
+      end
     end
 
     # == download_hash
