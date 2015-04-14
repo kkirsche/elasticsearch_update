@@ -11,10 +11,10 @@ module ElasticsearchUpdate
       @choice = '.deb'
     end
   end
+
   # The TestInstaller class below tests the Downloader class from the library
   class TestWizard
     describe 'Wizard', 'Used to ask questions on the command line' do
-
       it 'should initialize without errors' do
         wizard = TestWizard.new
         assert_kind_of Wizard, wizard
@@ -81,14 +81,53 @@ module ElasticsearchUpdate
         end
       end
 
-      it 'should create the download hash' do
+      it 'should return a download object' do
         wizard = TestWizard.new
+        hash = {
+          base_url: 'download.elastic.co',
+          version: 'Question asked.',
+          extension: '.deb',
+          url: 'https://download.elastic.co/elasticsearch/elasticsearch/elast' \
+               'icsearch-Question asked..deb',
+          verify_url: 'https://download.elastic.co/elasticsearch/elasticsearc' \
+                      'h/elasticsearch-Question asked..deb.sha1.txt'
+        }
 
         result = wizard.download_hash
+        assert_kind_of ElasticsearchUpdate::Download, result
+      end
 
-        result.must_equal(base_url: 'download.elastic.co',
-                          version: 'Question asked.',
-                          extension: '.deb')
+      it 'should return a hash version of the download object' do
+        wizard = TestWizard.new
+        hash = {
+          base_url: 'download.elastic.co',
+          version: 'Question asked.',
+          extension: '.deb',
+          url: 'https://download.elastic.co/elasticsearch/elasticsearch/elast' \
+               'icsearch-Question asked..deb',
+          verify_url: 'https://download.elastic.co/elasticsearch/elasticsearc' \
+                      'h/elasticsearch-Question asked..deb.sha1.txt'
+        }
+
+        result = wizard.download_hash
+        assert_kind_of ElasticsearchUpdate::Download, result
+        result.to_h.must_equal hash
+      end
+
+      it 'should return an array version of the download object' do
+        wizard = TestWizard.new
+        array = [
+          [:base_url, 'download.elastic.co'],
+          [:version, 'Question asked.'],
+          [:extension, '.deb'],
+          [:url, 'https://download.elastic.co/elasticsearch/elasticsearch/ela' \
+                 'sticsearch-Question asked..deb'],
+          [:verify_url, 'https://download.elastic.co/elasticsearch/elasticsea' \
+                 'rch/elasticsearch-Question asked..deb.sha1.txt']
+        ]
+
+        result = wizard.download_hash
+        result.to_a.must_equal array
       end
     end
   end

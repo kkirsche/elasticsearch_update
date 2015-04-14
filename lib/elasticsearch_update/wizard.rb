@@ -196,11 +196,7 @@ module ElasticsearchUpdate
     #    wizard = ElasticsearchUpdate::Wizard.new
     #    hash = wizard.download_hash
     def download_hash
-      {
-        base_url: 'download.elastic.co',
-        version: version,
-        extension: extension
-      }
+      Download.new version: version, extension: extension
     end
   end
 end

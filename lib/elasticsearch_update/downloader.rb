@@ -22,7 +22,7 @@ module ElasticsearchUpdate
   #
   #    ElasticsearchUpdate::Downloader.new({ host: 'localhost', port: 9200 })
   class Downloader
-    attr_reader :extension, :base, :version, :download_url, :verify_url
+    attr_reader :download
     attr_accessor :update_file
     # == initialize
     # Allows us to create an instance of the Downloader
@@ -40,7 +40,7 @@ module ElasticsearchUpdate
     # == Example
     #
     #    ElasticsearchUpdate::Downloader.new({ host: 'localhost', port: 9200 })
-    def initialize(hash, test = false)
+    def initialize(download, test = false)
       @log = Logger.new(STDOUT)
       if test
         @log.level = Logger::FATAL
@@ -50,15 +50,7 @@ module ElasticsearchUpdate
 
       @log.debug('Logger created for Downloader.')
 
-      @extension = hash[:extension]
-      @base = hash[:base_url]
-      @version = hash[:version]
-      @download_url = 'https://' + @base +
-                      '/elasticsearch/elasticsearch/elasticsearch-' + @version +
-                      @extension
-      @verify_url = 'https://' + @base +
-                    '/elasticsearch/elasticsearch/elasticsearch-' + @version +
-                    @extension + '.sha1.txt'
+      @download = download
     end
 
     # == write_file_from_url
@@ -77,7 +69,7 @@ module ElasticsearchUpdate
     #
     #    write_file_from_url(Tempfile.new('example'), http://foo.bar/file.zip)
     def write_file_from_url(file, url)
-      Net::HTTP.start(@base) do |http|
+      Net::HTTP.start(@download.base_url) do |http|
         begin
           http.request_get(url) do |resp|
             resp.read_body do |segment|
@@ -107,11 +99,11 @@ module ElasticsearchUpdate
     #    # Test
     #    download_file(true)
     def download_file(test = false)
-      @update_file = Tempfile.new(['elasticsearch_update_file', @extension])
+      @update_file = Tempfile.new(['elasticsearch_update_file', @download.extension])
 
       @log.info('Downloading file from url.')
 
-      write_file_from_url(@update_file, @download_url) unless test
+      write_file_from_url(@update_file, @download.url) unless test
 
       @update_file
     end
@@ -155,7 +147,7 @@ module ElasticsearchUpdate
     #
     # == Requires
     #
-    # download_remote_sha1 requires @verify_url to be set as a string to a
+    # download_remote_sha1 requires @download.verify_url to be set as a string to a
     # .txt file.
     #
     # == Example
@@ -165,7 +157,7 @@ module ElasticsearchUpdate
       @log.info('Downloading Elasticsearch SHA1.')
 
       @remote_sha1 = ''
-      open(@verify_url) do |file|
+      open(@download.verify_url) do |file|
         @remote_sha1 = file.read
       end
 
