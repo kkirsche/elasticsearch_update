@@ -195,7 +195,7 @@ module ElasticsearchUpdate
     #    hash = wizard.download_hash
     def download_hash
       {
-        base_url: 'download.elasticsearch.org',
+        base_url: 'download.elastic.co',
         version: version,
         extension: extension
       }

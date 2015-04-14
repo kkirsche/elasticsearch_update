@@ -1,6 +1,7 @@
 require 'minitest_helper'
 
 module ElasticsearchUpdate
+  # Test wizard overrides the Wizard class methods for testing.
   class TestWizard < Wizard
     def ask(_question, _type = String, &_block)
       'Question asked.'
@@ -85,7 +86,7 @@ module ElasticsearchUpdate
 
         result = wizard.download_hash
 
-        result.must_equal(base_url: 'download.elasticsearch.org',
+        result.must_equal(base_url: 'download.elastic.co',
                           version: 'Question asked.',
                           extension: '.deb')
       end
