@@ -23,14 +23,14 @@ module ElasticsearchUpdate
           extension: '.deb'
         }
 
-        @downloader = TestDownloader.new(hash, false)
-        assert_kind_of ElasticsearchUpdate::Downloader, @downloader
+        downloader = TestDownloader.new(hash, false)
+        assert_kind_of ElasticsearchUpdate::Downloader, downloader
 
-        @downloader.base.must_equal 'download.elastic.co'
-        @downloader.extension.must_equal '.deb'
-        @downloader.version.must_equal '1.4.2'
-        @downloader.download_url.must_equal 'https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.4.2.deb'
-        @downloader.verify_url.must_equal 'https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.4.2.deb.sha1.txt'
+        downloader.base.must_equal 'download.elastic.co'
+        downloader.extension.must_equal '.deb'
+        downloader.version.must_equal '1.4.2'
+        downloader.download_url.must_equal 'https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.4.2.deb'
+        downloader.verify_url.must_equal 'https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.4.2.deb.sha1.txt'
       end
 
       it 'should retrieve the correct SHA1 value from Elasticsearch\'s website' do
@@ -41,12 +41,12 @@ module ElasticsearchUpdate
           extension: '.deb'
         }
 
-        @mock_file = Minitest::Mock.new
-        @mock_file.expect(:read, 'd377e39343e5cc277104beee349e1578dc50f7f8  elasticsearch-1.4.2.deb')
+        mock_file = Minitest::Mock.new
+        mock_file.expect(:read, 'd377e39343e5cc277104beee349e1578dc50f7f8  elasticsearch-1.4.2.deb')
 
-        Kernel.stub :open, nil, @mock_file do
-          @downloader = TestDownloader.new(hash, true)
-          @downloader.download_remote_sha1.must_equal 'd377e39343e5cc277104beee349e1578dc50f7f8'
+        Kernel.stub :open, nil, mock_file do
+          downloader = TestDownloader.new(hash, true)
+          downloader.download_remote_sha1.must_equal 'd377e39343e5cc277104beee349e1578dc50f7f8'
         end
       end
 
@@ -58,17 +58,17 @@ module ElasticsearchUpdate
           extension: '.deb'
         }
 
-        @mock_file_obj = Minitest::Mock.new
-        @mock_result = 'd377e39343e5cc277104beee349e1578dc50f7f8'
-        @mock_file_obj.expect(:hexdigest, @mock_result)
+        mock_file_obj = Minitest::Mock.new
+        mock_result = 'd377e39343e5cc277104beee349e1578dc50f7f8'
+        mock_file_obj.expect(:hexdigest, mock_result)
 
-        @mock_file = Minitest::Mock.new
-        @mock_file.expect(:path, 'fake/path')
+        mock_file = Minitest::Mock.new
+        mock_file.expect(:path, 'fake/path')
 
-        Digest::SHA1.stub :file, @mock_file_obj do
-          @downloader = TestDownloader.new(hash, true)
-          @downloader.update_file = @mock_file
-          @downloader.verify_update_file.must_equal true
+        Digest::SHA1.stub :file, mock_file_obj do
+          downloader = TestDownloader.new(hash, true)
+          downloader.update_file = mock_file
+          downloader.verify_update_file.must_equal true
         end
       end
 
@@ -80,17 +80,17 @@ module ElasticsearchUpdate
           extension: '.deb'
         }
 
-        @mock_file_obj = Minitest::Mock.new
-        @mock_result = '0'
-        @mock_file_obj.expect(:hexdigest, @mock_result)
+        mock_file_obj = Minitest::Mock.new
+        mock_result = '0'
+        mock_file_obj.expect(:hexdigest, mock_result)
 
-        @mock_file = Minitest::Mock.new
-        @mock_file.expect(:path, 'fake/path')
+        mock_file = Minitest::Mock.new
+        mock_file.expect(:path, 'fake/path')
 
-        Digest::SHA1.stub :file, @mock_file_obj do
-          @downloader = TestDownloader.new(hash, true)
-          @downloader.update_file = @mock_file
-          @downloader.verify_update_file.must_equal 'File was not downloaded correctly. Please try again.'
+        Digest::SHA1.stub :file, mock_file_obj do
+          downloader = TestDownloader.new(hash, true)
+          downloader.update_file = mock_file
+          downloader.verify_update_file.must_equal 'File was not downloaded correctly. Please try again.'
         end
       end
 
@@ -102,8 +102,8 @@ module ElasticsearchUpdate
           extension: '.deb'
         }
 
-        @downloader = TestDownloader.new(hash, true)
-        assert_kind_of Tempfile, @downloader.download_file(true)
+        downloader = TestDownloader.new(hash, true)
+        assert_kind_of Tempfile, downloader.download_file(true)
       end
 
       it 'writes a downloaded file' do
@@ -114,19 +114,19 @@ module ElasticsearchUpdate
           extension: '.deb'
         }
 
-        @mock_resp = Minitest::Mock.new
-        @mock_resp.expect(:read_body, 'Test')
+        mock_resp = Minitest::Mock.new
+        mock_resp.expect(:read_body, 'Test')
 
-        @mock_http = Minitest::Mock.new
-        @mock_http.expect(:request_get, @mock_resp, [String])
+        mock_http = Minitest::Mock.new
+        mock_http.expect(:request_get, mock_resp, [String])
 
-        @mock_file = Minitest::Mock.new
-        @mock_file.expect(:write, true, [String])
-        @mock_file.expect(:close, true)
+        mock_file = Minitest::Mock.new
+        mock_file.expect(:write, true, [String])
+        mock_file.expect(:close, true)
 
-        @downloader = TestDownloader.new(hash, true)
-        Net::HTTP.stub :start, true, @mock_http do
-          @downloader.write_file_from_url(@mock_file, 'http://test.org')
+        downloader = TestDownloader.new(hash, true)
+        Net::HTTP.stub :start, true, mock_http do
+          downloader.write_file_from_url(mock_file, 'http://test.org')
         end
       end
     end
