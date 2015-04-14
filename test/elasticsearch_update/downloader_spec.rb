@@ -18,7 +18,7 @@ module ElasticsearchUpdate
       it 'should initialize and correctly assign values.' do
         hash =
         {
-          base_url: 'download.elasticsearch.org',
+          base_url: 'download.elastic.co',
           version: '1.4.2',
           extension: '.deb'
         }
@@ -26,17 +26,17 @@ module ElasticsearchUpdate
         @downloader = TestDownloader.new(hash, false)
         assert_kind_of ElasticsearchUpdate::Downloader, @downloader
 
-        @downloader.base.must_equal 'download.elasticsearch.org'
+        @downloader.base.must_equal 'download.elastic.co'
         @downloader.extension.must_equal '.deb'
         @downloader.version.must_equal '1.4.2'
-        @downloader.download_url.must_equal 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.4.2.deb'
-        @downloader.verify_url.must_equal 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.4.2.deb.sha1.txt'
+        @downloader.download_url.must_equal 'https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.4.2.deb'
+        @downloader.verify_url.must_equal 'https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.4.2.deb.sha1.txt'
       end
 
       it 'should retrieve the correct SHA1 value from Elasticsearch\'s website' do
         hash =
         {
-          base_url: 'download.elasticsearch.org',
+          base_url: 'download.elastic.co',
           version: '1.4.2',
           extension: '.deb'
         }
@@ -53,7 +53,7 @@ module ElasticsearchUpdate
       it "should retrieve the verify the file's SHA1 value against Elasticsearch's" do
         hash =
         {
-          base_url: 'download.elasticsearch.org',
+          base_url: 'download.elastic.co',
           version: '1.4.2',
           extension: '.deb'
         }
@@ -75,7 +75,7 @@ module ElasticsearchUpdate
       it "should retrieve the verify the file's SHA1 value against Elasticsearch's" do
         hash =
         {
-          base_url: 'download.elasticsearch.org',
+          base_url: 'download.elastic.co',
           version: '1.4.2',
           extension: '.deb'
         }
@@ -97,7 +97,7 @@ module ElasticsearchUpdate
       it 'creates a tempfile to store the Elasticsearch deb file' do
         hash =
         {
-          base_url: 'download.elasticsearch.org',
+          base_url: 'download.elastic.co',
           version: '1.4.2',
           extension: '.deb'
         }
@@ -109,7 +109,7 @@ module ElasticsearchUpdate
       it 'writes a downloaded file' do
         hash =
         {
-          base_url: 'download.elasticsearch.org',
+          base_url: 'download.elastic.co',
           version: '1.4.2',
           extension: '.deb'
         }
